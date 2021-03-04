@@ -7,7 +7,7 @@
         <packaging>war</packaging>
       </options>
     </properties>
-    <root id="archive" name="Onlineshop-0.1.war">
+    <root id="archive" name="Bookshelf-1.0.war">
       <element id="artifact" artifact-name="Onlineshop:war exploded" />
     </root>
   </artifact>

@@ -5,6 +5,7 @@ public class Artikel {
     private double preis;
     private int stueckzahl;
     private String artikelNummer; //RegEx
+    private Onlineshop onlineshop;
 
     public String getName() {
         return name;
@@ -36,5 +37,13 @@ public class Artikel {
 
     public void setArtikelNummer(String artikelNummer) {
         this.artikelNummer = artikelNummer;
+    }
+
+    public Onlineshop getOnlineshop() {
+        return onlineshop;
+    }
+
+    public void setOnlineshop(Onlineshop onlineshop) {
+        this.onlineshop = onlineshop;
     }
 }

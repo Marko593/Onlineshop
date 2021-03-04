@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ch.bzz</groupId>
-    <artifactId>Onlineshop</artifactId>
-    <version>0.1</version>
-    <name>Onlineshop</name>
+    <artifactId>Bookshelf</artifactId>
+    <version>1.0</version>
+    <name>Bookshelf</name>
     <packaging>war</packaging>
 
     <properties>
@@ -23,6 +23,19 @@
             <artifactId>jersey-server</artifactId>
             <version>2.32</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.12.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.12.1</version>
+        </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -47,3 +60,4 @@
         </plugins>
     </build>
 </project>
+
