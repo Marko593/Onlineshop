@@ -1,0 +1,40 @@
+[
+  {
+    "url": "www.jordan.com",
+    "anzahlRegistrierteBenutzer": "5",
+    "anzahlBestellungen": "7",
+    "alleArtikel": [
+      {
+        "name": "Jordan 1 High Dark Mocha",
+        "preis": 209.90,
+        "stueckzahl": 6,
+        "artikelNummer": "333-224-53-23"
+      },
+      {
+        "name": "Jordan 4 Cavs",
+        "preis": 244.90,
+        "stueckzahl": 8,
+        "artikelNummer": "333-289-47-97"
+      }
+    ]
+  },
+  {
+    "url": "www.travis-scott.com",
+    "anzahlRegistrierteBenutzer": "13",
+    "anzahlBestellungen": "33",
+    "alleArtikel": [
+      {
+        "name": "Travis Scott T-Shirt",
+        "preis": 89.50,
+        "stueckzahl": 2,
+        "artikelNummer": "122-544-77-11"
+      },
+      {
+        "name": "Travis Scott Hoodie",
+        "preis": 119.00,
+        "stueckzahl": 5,
+        "artikelNummer": "124-641-85-29"
+      }
+    ]
+  }
+]
