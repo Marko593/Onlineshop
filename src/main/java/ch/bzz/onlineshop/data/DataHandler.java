@@ -70,6 +70,23 @@ public class DataHandler {
     }
 
     /**
+     * gets article by its name
+     *
+     * @param name
+     * @return
+     */
+    public static Artikel findArtikelByName(String name) {
+        List<Artikel> artikelList = getArtikelList();
+        for (Artikel artikel : artikelList) {
+            if (artikel != null && artikel.getName().equals(name)){
+                return artikel;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * gets a article by its artikelNummer
      *
      * @param artikelNummer the uuid of the book
