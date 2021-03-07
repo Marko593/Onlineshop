@@ -12,15 +12,15 @@ import java.util.Set;
 /**
  * configure the web services and properties
  * <p>
- * M151: BookDB
+ * Onlineshop
  *
- * @author Marcel Suter (Ghwalin)
+ * @author Marko Micanovic
  */
 
 @ApplicationPath("/resource")
 
 public class Config extends Application {
-    private static final String PROPERTIES_PATH = "/home/bzz/webapp/book.properties";
+    private static final String PROPERTIES_PATH = "/home/bzz/webapp/artikel.properties";
     private static Properties properties = null;
 
     /**
