@@ -2,6 +2,7 @@ package ch.bzz.onlineshop.service;
 
 import ch.bzz.onlineshop.data.DataHandler;
 import ch.bzz.onlineshop.model.Artikel;
+import ch.bzz.onlineshop.model.Onlineshop;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -12,18 +13,18 @@ import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
- * provides services for the Artikel
+ * provides services for the Onlineshop
  * <p>
  * M133: Onlineshop
  *
  * @author Marko Micanovic
  */
 
-@Path("artikel")
-public class ArtikelService {
+@Path("onlineshop")
+public class OnlineshopService {
 
     /**
-     * produces a list of all articles
+     * produces a list of all onlineshops
      *
      * @return Response
      */
@@ -31,34 +32,34 @@ public class ArtikelService {
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
 
-    public Response listArtikel(){
-        List<Artikel> artikelList = DataHandler.getArtikelList();
+    public Response listOnlineshop(){
+        List<Onlineshop> onlineshopList = DataHandler.getOnlineshopList();
         Response response = Response
                 .status(200)
-                .entity(artikelList)
+                .entity(onlineshopList)
                 .build();
         return response;
     }
 
     /**
-     * reads a single article identified by the artikelNummer
+     * reads a single onlineshop identified by the url
      *
-     * @param artikelNummer the artikelNummer in the URL
+     * @param url the onlineshopURL in the URL
      * @return Response
      */
     @GET
     @Path("read")
     @Produces(MediaType.APPLICATION_JSON)
 
-    public Response readArtikel(
-            @QueryParam("artikelNummer") String artikelNummer
+    public Response readOnlineshop(
+            @QueryParam("url") String url
     ) {
-        Artikel artikel = null;
+        Onlineshop onlineshop = null;
         int httpStatus;
 
         try {
-            artikel = DataHandler.findArtikelByArtikelnummer(artikelNummer);
-            if (artikel != null) {
+            onlineshop = DataHandler.findOnlineshopByURL(url);
+            if (onlineshop != null) {
                 httpStatus = 200;
             } else {
                 httpStatus = 404;
@@ -69,7 +70,7 @@ public class ArtikelService {
 
         Response response = Response
                 .status(httpStatus)
-                .entity(artikel)
+                .entity(onlineshop)
                 .build();
         return response;
     }

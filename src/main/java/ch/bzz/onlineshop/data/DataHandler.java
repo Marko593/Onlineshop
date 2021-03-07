@@ -54,7 +54,7 @@ public class DataHandler {
     }
 
     /**
-     * find the onlineshop for a article
+     * find the onlineshop by a article
      *
      * @param artikelNummer
      * @return
@@ -63,6 +63,22 @@ public class DataHandler {
         for (Onlineshop onlineshop : getOnlineshopList()) {
             for (Artikel artikel : onlineshop.getAlleArtikel()) {
                 if (artikel.getArtikelNummer().equals(artikelNummer))
+                    return onlineshop;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * find the onlineshop by url
+     *
+     * @param url
+     * @return
+     */
+    public static Onlineshop findOnlineshopByURL(String url) {
+        for (Onlineshop onlineshop : getOnlineshopList()) {
+            for (Artikel artikel : onlineshop.getAlleArtikel()) {
+                if (artikel.getArtikelNummer().equals(url))
                     return onlineshop;
             }
         }
