@@ -1,0 +1,176 @@
+{
+	"id": "f2743ee4-eced-40ef-9fe7-6e7feecba39e",
+	"name": "Onlineshop",
+	"timestamp": "2021-03-07T12:28:23.883Z",
+	"collection_id": "0ca07777-e110-4e8b-8699-2b58a7651006",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 1,
+	"totalFail": 5,
+	"results": [
+		{
+			"id": "3acf9474-674a-45da-9089-f1cf7adfe159",
+			"name": "TestService",
+			"url": "http://localhost:8080/Onlineshop-0.1/resource/test/test",
+			"time": 15,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				15
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "8ec29842-96c4-430f-bfb3-06b715b73f52",
+			"name": "Artikelliste",
+			"url": "http://localhost:8080/Onlineshop-0.1/resource/artikel/list",
+			"time": 17,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status test": false,
+				"validate response": false
+			},
+			"testPassFailCounts": {
+				"Status test": {
+					"pass": 0,
+					"fail": 1
+				},
+				"validate response": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				17
+			],
+			"allTests": [
+				{
+					"Status test": false,
+					"validate response": false
+				}
+			]
+		},
+		{
+			"id": "0b2ed36b-09dc-403a-b9ca-8045a9791dae",
+			"name": "Read Artikel",
+			"url": "http://localhost:8080/Onlineshop-0.1/resource/artikel/read?artikelNummer=333-224-53-23",
+			"time": 7,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status test": false,
+				"validate response": false
+			},
+			"testPassFailCounts": {
+				"Status test": {
+					"pass": 0,
+					"fail": 1
+				},
+				"validate response": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"Status test": false,
+					"validate response": false
+				}
+			]
+		},
+		{
+			"id": "05b27cda-b4e4-45cf-aedd-c06635b83d48",
+			"name": "Read Unknown Artikel",
+			"url": "http://localhost:8080/Onlineshop-0.1/resource/artikel/read?artikelNummer=111-222-33-44",
+			"time": 6,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status test": true
+			},
+			"testPassFailCounts": {
+				"Status test": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status test": true
+				}
+			]
+		},
+		{
+			"id": "c34e7fea-1aba-41e6-a77b-fe44cb19ba7c",
+			"name": "Read Artikel with invalid uuid",
+			"url": "http://localhost:8080/Onlineshop-0.1/?artikelNummer=333-224-53-23&",
+			"time": 12,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status test": false
+			},
+			"testPassFailCounts": {
+				"Status test": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				12
+			],
+			"allTests": [
+				{
+					"Status test": false
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 57,
+	"collection": {
+		"requests": [
+			{
+				"id": "3acf9474-674a-45da-9089-f1cf7adfe159",
+				"method": "GET"
+			},
+			{
+				"id": "8ec29842-96c4-430f-bfb3-06b715b73f52",
+				"method": "GET"
+			},
+			{
+				"id": "0b2ed36b-09dc-403a-b9ca-8045a9791dae",
+				"method": "GET"
+			},
+			{
+				"id": "05b27cda-b4e4-45cf-aedd-c06635b83d48",
+				"method": "GET"
+			},
+			{
+				"id": "c34e7fea-1aba-41e6-a77b-fe44cb19ba7c",
+				"method": "GET"
+			}
+		]
+	}
+}
