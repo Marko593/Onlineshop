@@ -10,10 +10,10 @@ import java.util.ArrayList;
  * @author Marko Micanovic
  */
 public class Onlineshop {
-    private ArrayList<Artikel> alleArtikel;
     private String url;
     private int anzahlRegistrierteBenutzer;
     private int anzahlBestellungen;
+    private ArrayList<Artikel> alleArtikel;
 
     /**
      * Gets the artikelMap
