@@ -1,6 +1,6 @@
 package ch.bzz.onlineshop.service;
 
-import ch.bzz.onlineshop.data.DataHandler;
+import ch.bzz.onlineshop.data.DataHandlerFail;
 import ch.bzz.onlineshop.model.Artikel;
 
 import javax.ws.rs.GET;
@@ -10,7 +10,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * provides services for the bookshelf
@@ -31,7 +30,7 @@ public class ArtikelServiceFail {
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listArtikel() {
-        Map<String, Artikel> artikelMap = DataHandler.getArtikelMap();
+        Map<String, Artikel> artikelMap = DataHandlerFail.getArtikelMap();
 
         Response response = Response
                 .status(200)
@@ -58,7 +57,7 @@ public class ArtikelServiceFail {
 
 //        try {
 //            UUID.fromString(artikelNummer);
-            artikel = DataHandler.readArtikel(artikelNummer);
+            artikel = DataHandlerFail.readArtikel(artikelNummer);
             if (artikel.getName() == null){
                 httpStatus = 404;
             } else {
