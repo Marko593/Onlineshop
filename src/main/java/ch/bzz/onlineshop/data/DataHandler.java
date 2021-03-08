@@ -21,6 +21,7 @@ import java.util.List;
 public class DataHandler {
     private static final DataHandler instance = new DataHandler();
     private static List<Onlineshop> onlineshopList = null;
+    private static List<Artikel> artikelList = null;
 
     /**
      * default constructor: defeat instantiation
@@ -43,7 +44,7 @@ public class DataHandler {
     }
 
     public static List<Artikel> getArtikelList() {
-        List<Artikel> artikelList = new ArrayList<>();
+        artikelList = new ArrayList<>();
 
         for (Onlineshop onlineshop : getOnlineshopList()) {
             for (Artikel artikel : onlineshop.getAlleArtikel()) {
@@ -92,7 +93,7 @@ public class DataHandler {
      * @return
      */
     public static Artikel findArtikelByName(String name) {
-        List<Artikel> artikelList = getArtikelList();
+        artikelList = getArtikelList();
         for (Artikel artikel : artikelList) {
             if (artikel != null && artikel.getName().equals(name)){
                 return artikel;
@@ -109,7 +110,7 @@ public class DataHandler {
      * @return book-object
      */
     public static Artikel findArtikelByArtikelnummer(String artikelNummer) {
-        List<Artikel> artikelList = getArtikelList();
+        artikelList = getArtikelList();
         for (Artikel artikel : artikelList) {
             if (artikel != null && artikel.getArtikelNummer().equals(artikelNummer))
                 return artikel;
