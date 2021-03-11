@@ -1,6 +1,7 @@
 package ch.bzz.onlineshop.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * a onlineshop of a article
@@ -13,13 +14,13 @@ public class Onlineshop {
     private String url;
     private int anzahlRegistrierteBenutzer;
     private int anzahlBestellungen;
-    private ArrayList<Artikel> alleArtikel;
+    private List<Artikel> alleArtikel;
 
     /**
      * Gets the artikelMap
      * @return map of articles
      */
-    public ArrayList<Artikel> getAlleArtikel() {
+    public List<Artikel> getAlleArtikel() {
         return alleArtikel;
     }
 
@@ -27,7 +28,7 @@ public class Onlineshop {
      * sets the artikelMap
      * @param alleArtikel
      */
-    public void setAlleArtikel(ArrayList<Artikel> alleArtikel) {
+    public void setAlleArtikel(List<Artikel> alleArtikel) {
         this.alleArtikel = alleArtikel;
     }
 
