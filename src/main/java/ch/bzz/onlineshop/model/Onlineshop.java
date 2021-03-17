@@ -15,13 +15,30 @@ public class Onlineshop {
     private int anzahlRegistrierteBenutzer;
     private int anzahlBestellungen;
     private List<Artikel> alleArtikel;
+    private String onlineshop;
+
+    public String getOnlineshop() {
+        return onlineshop;
+    }
+
+    public void setOnlineshop(String onlineshop) {
+        this.onlineshop = onlineshop;
+    }
 
     /**
      * Gets the artikelMap
      * @return map of articles
      */
-    public List<Artikel> getAlleArtikel() {
+    public List<Artikel> getArtikelList() {
         return alleArtikel;
+    }
+
+    /**
+     * Sets the artikelMap
+     * @param alleArtikel
+     */
+    public void setArtikelList(List<Artikel> alleArtikel) {
+        this.alleArtikel = alleArtikel;
     }
 
     /**

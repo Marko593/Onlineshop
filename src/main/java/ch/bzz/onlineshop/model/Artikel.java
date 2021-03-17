@@ -3,6 +3,8 @@ package ch.bzz.onlineshop.model;
 import ch.bzz.onlineshop.data.DataHandler;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.UUID;
+
 /**
  * a article in the onlineshop
  * <p>

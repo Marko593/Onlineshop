@@ -3,9 +3,12 @@ package ch.bzz.onlineshop.data;
 import ch.bzz.onlineshop.model.Artikel;
 import ch.bzz.onlineshop.model.Onlineshop;
 import ch.bzz.onlineshop.service.Config;
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -21,7 +24,6 @@ import java.util.List;
 public class DataHandler {
     private static final DataHandler instance = new DataHandler();
     private static List<Onlineshop> onlineshopList = null;
-    private static List<Artikel> artikelList = null;
 
     /**
      * default constructor: defeat instantiation
@@ -44,10 +46,10 @@ public class DataHandler {
     }
 
     public static List<Artikel> getArtikelList() {
-        artikelList = new ArrayList<>();
+        List<Artikel> artikelList = new ArrayList<>();
 
         for (Onlineshop onlineshop : getOnlineshopList()) {
-            for (Artikel artikel : onlineshop.getAlleArtikel()) {
+            for (Artikel artikel : onlineshop.getArtikelList()) {
                 artikelList.add(artikel);
             }
         }
@@ -62,12 +64,54 @@ public class DataHandler {
      */
     public static Onlineshop findOnlineshopByArtikelnummer(String artikelNummer) {
         for (Onlineshop onlineshop : getOnlineshopList()) {
-            for (Artikel artikel : onlineshop.getAlleArtikel()) {
+            for (Artikel artikel : onlineshop.getArtikelList()) {
                 if (artikel.getArtikelNummer().equals(artikelNummer))
                     return onlineshop;
             }
         }
         return null;
+    }
+
+    /**
+     * inserts a new onlineshop
+     * @param onlineshop
+     */
+    public static void insertOnlineshop(Onlineshop onlineshop) {
+        getOnlineshopList().add(onlineshop);
+        writeJSON();
+    }
+
+    /**
+     * updates an existing onlineshop
+     * @param onlineshop
+     * @return
+     */
+    public static boolean updateOnlineshop(Onlineshop onlineshop) {
+        boolean found = false;
+        Onlineshop entry = findOnlineshopByURL(onlineshop.getUrl());
+        if (entry != null) {
+            found = true;
+            entry.setOnlineshop(onlineshop.getOnlineshop());
+            writeJSON();
+        }
+        return found;
+    }
+
+    /**
+     * deletes onlineshop, if it has no articles
+     * @param onlineshopURL
+     * @return
+     */
+    public static int deleteOnlineshop(String onlineshopURL) {
+        int errorcode = 1;
+        Onlineshop onlineshop = findOnlineshopByURL(onlineshopURL);
+        if (onlineshop == null) errorcode = 1;
+        else if (onlineshop.getArtikelList() == null) {
+            getOnlineshopList().remove(onlineshop);
+            writeJSON();
+            errorcode = 0;
+        } else errorcode = -1;
+        return errorcode;
     }
 
     /**
@@ -78,7 +122,7 @@ public class DataHandler {
      */
     public static Onlineshop findOnlineshopByURL(String url) {
         for (Onlineshop onlineshop : getOnlineshopList()) {
-            for (Artikel artikel : onlineshop.getAlleArtikel()) {
+            for (Artikel artikel : onlineshop.getArtikelList()) {
                 if (artikel.getArtikelNummer().equals(url))
                     return onlineshop;
             }
@@ -93,7 +137,7 @@ public class DataHandler {
      * @return
      */
     public static Artikel findArtikelByName(String name) {
-        artikelList = getArtikelList();
+        List<Artikel> artikelList = getArtikelList();
         for (Artikel artikel : artikelList) {
             if (artikel != null && artikel.getName().equals(name)){
                 return artikel;
@@ -104,19 +148,87 @@ public class DataHandler {
     }
 
     /**
+     * inserts a article to the onlineshop
+     * @param artikel
+     * @param onlineshopURL
+     * @return
+     */
+    public static boolean insertArtikel(Artikel artikel, String onlineshopURL) {
+        Onlineshop onlineshop = findOnlineshopByURL(onlineshopURL);
+        if (onlineshop == null) {
+            return false;
+        } else {
+            onlineshop.getArtikelList().add(artikel);
+            writeJSON();
+            return true;
+        }
+    }
+
+    /**
+     * updates a article by deleting and inserting it
+     * @param artikel
+     * @param onlineshopURL
+     * @return
+     */
+    public static boolean updateArtikel(Artikel artikel, String onlineshopURL) {
+        if (deleteArtikel(artikel.getArtikelNummer()))
+            return insertArtikel(artikel, onlineshopURL);
+        else return false;
+    }
+
+    /**
+     * deletes a article identified by its articleNumber
+     * @param artikelNummer
+     * @return
+     */
+    public static boolean deleteArtikel(String artikelNummer) {
+        for (Onlineshop onlineshop : getOnlineshopList()) {
+            if (onlineshop.getArtikelList() != null) {
+                for (Artikel artikel : onlineshop.getArtikelList()) {
+                    if (artikel.getArtikelNummer().equals(artikelNummer)) {
+                        onlineshop.getArtikelList().remove(artikel);
+                        writeJSON();
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * gets a article by its artikelNummer
      *
      * @param artikelNummer the uuid of the book
      * @return book-object
      */
     public static Artikel findArtikelByArtikelnummer(String artikelNummer) {
-        artikelList = getArtikelList();
+        List<Artikel> artikelList = getArtikelList();
         for (Artikel artikel : artikelList) {
             if (artikel != null && artikel.getArtikelNummer().equals(artikelNummer))
                 return artikel;
         }
 
         return null;
+    }
+
+    /**
+     * write the onlineshops with their articles
+     */
+    private static void writeJSON() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectWriter objectWriter = objectMapper.writer(new DefaultPrettyPrinter());
+        FileOutputStream fileOutputStream = null;
+        Writer fileWriter;
+
+        String bookPath = Config.getProperty("onlineshopJSON");
+        try {
+            fileOutputStream = new FileOutputStream(bookPath);
+            fileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, StandardCharsets.UTF_8));
+            objectWriter.writeValue(fileWriter, getOnlineshopList());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
