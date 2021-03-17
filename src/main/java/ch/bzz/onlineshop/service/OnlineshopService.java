@@ -4,13 +4,11 @@ import ch.bzz.onlineshop.data.DataHandler;
 import ch.bzz.onlineshop.model.Artikel;
 import ch.bzz.onlineshop.model.Onlineshop;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * provides services for the Onlineshop
@@ -58,7 +56,7 @@ public class OnlineshopService {
         int httpStatus;
 
         try {
-            onlineshop = DataHandler.findOnlineshopByURL(url);
+            onlineshop = DataHandler.findOnlineshopByUUID(url);
             if (onlineshop != null) {
                 httpStatus = 200;
             } else {
@@ -73,5 +71,101 @@ public class OnlineshopService {
                 .entity(onlineshop)
                 .build();
         return response;
+    }
+
+    /**
+     * creates a new onlineshop without articles
+     * @param onlineshopName
+     * @return response
+     */
+    @POST
+    @Path("create")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response createOnlineshop(
+            @FormParam("onlineshopURL") String onlineshopUrl,
+            @FormParam("onlineshop") String onlineshopName
+    ) {
+        int httpStatus = 200;
+        Onlineshop onlineshop = new Onlineshop();
+        onlineshop.setOnlineshop(onlineshopName);
+        DataHandler.insertOnlineshop(onlineshop);
+
+        Response response = Response
+                .status(httpStatus)
+                .entity("")
+                .build();
+        return response;
+    }
+
+    /**
+     * updates the onlineshop in all it's articles
+     * @param onlineshopUUID
+     * @param onlineshopName
+     * @return response
+     */
+    @PUT
+    @Path("update")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response updateOnlineshop(
+            @FormParam("onlineshopUUID") String onlineshopUUID,
+            @FormParam("onlineshop") String onlineshopName
+    ) {
+        int httpStatus = 200;
+        Onlineshop onlineshop = new Onlineshop();
+        try {
+            UUID.fromString(onlineshopUUID);
+            onlineshop.setOnlineshopUUID(onlineshopUUID);
+            onlineshop.setOnlineshop(onlineshopName);
+            if (DataHandler.updateOnlineshop(onlineshop)) {
+                httpStatus = 200;
+            } else {
+                httpStatus = 404;
+            }
+        } catch (IllegalArgumentException argEx) {
+            httpStatus = 400;
+        }
+
+        Response response = Response
+                .status(httpStatus)
+                .entity("")
+                .build();
+        return response;
+    }
+
+    @DELETE
+    @Path("delete")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteOnlineshop (
+            @QueryParam("uuid") String onlineshopUUID
+    ) {
+        int httpStatus;
+        try {
+            UUID.fromString(onlineshopUUID);
+            int errorcode = DataHandler.deleteOnlineshop(onlineshopUUID);
+            if (errorcode == 0) httpStatus = 200;
+            else if (errorcode == -1) httpStatus = 409;
+            else httpStatus = 404;
+        } catch (IllegalArgumentException argEx) {
+            httpStatus = 400;
+        }
+        Response response = Response
+                .status(httpStatus)
+                .entity("")
+                .build();
+        return response;
+    }
+
+    /**
+     * sets the attribute values of the onlineshop object
+     * @param onlineshop
+     * @param onlineshopUUID
+     * @param name
+     */
+    private void setValues(
+            Onlineshop onlineshop,
+            String onlineshopUUID,
+            String name) {
+        onlineshop.setOnlineshopUUID(onlineshopUUID);
+        onlineshop.setOnlineshop(name);
     }
 }

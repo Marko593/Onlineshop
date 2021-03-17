@@ -88,7 +88,7 @@ public class DataHandler {
      */
     public static boolean updateOnlineshop(Onlineshop onlineshop) {
         boolean found = false;
-        Onlineshop entry = findOnlineshopByURL(onlineshop.getUrl());
+        Onlineshop entry = findOnlineshopByUUID(onlineshop.getOnlineshopUUID());
         if (entry != null) {
             found = true;
             entry.setOnlineshop(onlineshop.getOnlineshop());
@@ -99,12 +99,12 @@ public class DataHandler {
 
     /**
      * deletes onlineshop, if it has no articles
-     * @param onlineshopURL
+     * @param onlineshopUUID
      * @return
      */
-    public static int deleteOnlineshop(String onlineshopURL) {
+    public static int deleteOnlineshop(String onlineshopUUID) {
         int errorcode = 1;
-        Onlineshop onlineshop = findOnlineshopByURL(onlineshopURL);
+        Onlineshop onlineshop = findOnlineshopByUUID(onlineshopUUID);
         if (onlineshop == null) errorcode = 1;
         else if (onlineshop.getArtikelList() == null) {
             getOnlineshopList().remove(onlineshop);
@@ -117,13 +117,13 @@ public class DataHandler {
     /**
      * find the onlineshop by url
      *
-     * @param url
+     * @param uuid
      * @return
      */
-    public static Onlineshop findOnlineshopByURL(String url) {
+    public static Onlineshop findOnlineshopByUUID(String uuid) {
         for (Onlineshop onlineshop : getOnlineshopList()) {
             for (Artikel artikel : onlineshop.getArtikelList()) {
-                if (artikel.getArtikelNummer().equals(url))
+                if (artikel.getArtikelNummer().equals(uuid))
                     return onlineshop;
             }
         }
@@ -154,7 +154,7 @@ public class DataHandler {
      * @return
      */
     public static boolean insertArtikel(Artikel artikel, String onlineshopURL) {
-        Onlineshop onlineshop = findOnlineshopByURL(onlineshopURL);
+        Onlineshop onlineshop = findOnlineshopByUUID(onlineshopURL);
         if (onlineshop == null) {
             return false;
         } else {

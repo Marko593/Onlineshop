@@ -3,8 +3,6 @@ package ch.bzz.onlineshop.model;
 import ch.bzz.onlineshop.data.DataHandler;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.util.UUID;
-
 /**
  * a article in the onlineshop
  * <p>
@@ -32,7 +30,7 @@ public class Artikel {
     @JsonIgnore
     public String getOnlineshopURL(){
         Onlineshop onlineshop = DataHandler.findOnlineshopByArtikelnummer(getArtikelNummer());
-        return onlineshop.getUrl();
+        return onlineshop.getOnlineshopUUID();
     }
     /**
      * gets the registered users from onlineshop

@@ -1,6 +1,5 @@
 package ch.bzz.onlineshop.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,11 +10,9 @@ import java.util.List;
  * @author Marko Micanovic
  */
 public class Onlineshop {
-    private String url;
-    private int anzahlRegistrierteBenutzer;
-    private int anzahlBestellungen;
-    private List<Artikel> alleArtikel;
+    private String onlineshopUUID;
     private String onlineshop;
+    private List<Artikel> alleArtikel;
 
     public String getOnlineshop() {
         return onlineshop;
@@ -62,47 +59,15 @@ public class Onlineshop {
      * gets the onlineshop-url
      * @return onlineshop-url
      */
-    public String getUrl() {
-        return url;
+    public String getOnlineshopUUID() {
+        return onlineshopUUID;
     }
 
     /**
      * sets the onlineshop-url
-     * @param url
+     * @param onlineshopUUID
      */
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    /**
-     * gets the number of registered users
-     * @return number of registered users
-     */
-    public int getAnzahlRegistrierteBenutzer() {
-        return anzahlRegistrierteBenutzer;
-    }
-
-    /**
-     * sets the number of registered users
-     * @param anzahlRegistrierteBenutzer
-     */
-    public void setAnzahlRegistrierteBenutzer(int anzahlRegistrierteBenutzer) {
-        this.anzahlRegistrierteBenutzer = anzahlRegistrierteBenutzer;
-    }
-
-    /**
-     * gets the number of completed orders
-     * @return number of completed orders
-     */
-    public int getAnzahlBestellungen() {
-        return anzahlBestellungen;
-    }
-
-    /**
-     * sets the number of completed orders
-     * @param anzahlBestellungen
-     */
-    public void setAnzahlBestellungen(int anzahlBestellungen) {
-        this.anzahlBestellungen = anzahlBestellungen;
+    public void setOnlineshopUUID(String onlineshopUUID) {
+        this.onlineshopUUID = onlineshopUUID;
     }
 }
