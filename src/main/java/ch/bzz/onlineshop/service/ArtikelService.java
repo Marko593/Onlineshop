@@ -76,7 +76,7 @@ public class ArtikelService {
 
     /**
      * creates a new article
-     * @param onlineshopURL
+     * @param onlineshopUUID
      * @param name
      * @param preis
      * @param stueckzahl
@@ -87,7 +87,7 @@ public class ArtikelService {
     @Path("create")
     @Produces(MediaType.TEXT_PLAIN)
     public Response createArtikel(
-            @FormParam("onlineshopURL") String onlineshopURL,
+            @FormParam("onlineshopUUID") String onlineshopUUID,
             @FormParam("name") String name,
             @FormParam("preis") Double preis,
             @FormParam("stueckzahl") int stueckzahl,
@@ -104,7 +104,7 @@ public class ArtikelService {
                artikelNummer
        );
 
-       DataHandler.insertArtikel(artikel, onlineshopURL);
+       DataHandler.insertArtikel(artikel, onlineshopUUID);
 
         Response response = Response
                 .status(httpStatus)
@@ -115,7 +115,7 @@ public class ArtikelService {
 
     /**
      * updates an existing article
-     * @param onlineshopURL
+     * @param onlineshopUUID
      * @param name
      * @param preis
      * @param stueckzahl
@@ -126,17 +126,16 @@ public class ArtikelService {
     @Path("update")
     @Produces(MediaType.TEXT_PLAIN)
     public Response updateArtikel(
-            @FormParam("onlineshopURL") String onlineshopURL,
+            @FormParam("onlineshopUUID") String onlineshopUUID,
             @FormParam("name") String name,
             @FormParam("preis") Double preis,
             @FormParam("stueckzahl") int stueckzahl,
             @FormParam("artikelNummer") String artikelNummer
     ) {
         int httpStatus = 200;
-        Artikel artikel = new Artikel();
         try {
             UUID.fromString(artikelNummer);
-            artikel.setArtikelNummer(artikelNummer);
+            Artikel artikel = DataHandler.findArtikelByArtikelnummer(artikelNummer);
             setValues(
                     artikel,
                     name,
@@ -144,7 +143,7 @@ public class ArtikelService {
                     stueckzahl,
                     artikelNummer
             );
-            if (DataHandler.updateArtikel(artikel, onlineshopURL)) {
+            if (DataHandler.updateArtikel(artikel, onlineshopUUID)) {
                 httpStatus = 200;
             } else {
                 httpStatus = 404;

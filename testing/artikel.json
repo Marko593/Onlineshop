@@ -1,8 +1,7 @@
 [
   {
-    "url": "www.jordan.com",
-    "anzahlRegistrierteBenutzer": "5",
-    "anzahlBestellungen": "7",
+    "onlineshopUUID": "d3e783a4-1ee3-4a17-9c35-f03d12c9b1c0",
+    "onlineshop": "Titolo.ch",
     "alleArtikel": [
       {
         "name": "Jordan 1 High Dark Mocha",
@@ -19,9 +18,8 @@
     ]
   },
   {
-    "url": "www.travis-scott.com",
-    "anzahlRegistrierteBenutzer": "13",
-    "anzahlBestellungen": "33",
+    "onlineshopUUID": "27e489d6-932f-4568-a355-6a9ed13c3c37",
+    "onlineshop": "Travis-Scott.com",
     "alleArtikel": [
       {
         "name": "Travis Scott T-Shirt",

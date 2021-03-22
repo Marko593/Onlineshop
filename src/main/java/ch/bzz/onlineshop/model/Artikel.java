@@ -28,28 +28,9 @@ public class Artikel {
      * @return the onlineshop-url
      */
     @JsonIgnore
-    public String getOnlineshopURL(){
+    public String getOnlineshopUUID(){
         Onlineshop onlineshop = DataHandler.findOnlineshopByArtikelnummer(getArtikelNummer());
         return onlineshop.getOnlineshopUUID();
-    }
-    /**
-     * gets the registered users from onlineshop
-     * @return the number of registered users
-     */
-    @JsonIgnore
-    public int getOnlineshopRegistrierteBenutzer(){
-        Onlineshop onlineshop = DataHandler.findOnlineshopByArtikelnummer(getArtikelNummer());
-        return onlineshop.getAnzahlRegistrierteBenutzer();
-    }
-
-    /**
-     * gets the number of completed orders from onlineshop
-     * @return the number of completed orders
-     */
-    @JsonIgnore
-    public int getOnlineshopAnzahlBestellungen(){
-        Onlineshop onlineshop = DataHandler.findOnlineshopByArtikelnummer(getArtikelNummer());
-        return onlineshop.getAnzahlBestellungen();
     }
 
     public String getName() {

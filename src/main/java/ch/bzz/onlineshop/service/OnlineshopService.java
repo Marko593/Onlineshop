@@ -42,7 +42,7 @@ public class OnlineshopService {
     /**
      * reads a single onlineshop identified by the url
      *
-     * @param url the onlineshopURL in the URL
+     * @param uuid the onlineshopURL in the URL
      * @return Response
      */
     @GET
@@ -50,13 +50,13 @@ public class OnlineshopService {
     @Produces(MediaType.APPLICATION_JSON)
 
     public Response readOnlineshop(
-            @QueryParam("url") String url
+            @QueryParam("uuid") String uuid
     ) {
         Onlineshop onlineshop = null;
         int httpStatus;
 
         try {
-            onlineshop = DataHandler.findOnlineshopByUUID(url);
+            onlineshop = DataHandler.findOnlineshopByUUID(uuid);
             if (onlineshop != null) {
                 httpStatus = 200;
             } else {
@@ -85,6 +85,9 @@ public class OnlineshopService {
             @FormParam("onlineshopURL") String onlineshopUrl,
             @FormParam("onlineshop") String onlineshopName
     ) {
+        List<Onlineshop> onlineshopList = DataHandler.getOnlineshopList();
+        String onlineshopUUID = UUID.randomUUID().toString();
+
         int httpStatus = 200;
         Onlineshop onlineshop = new Onlineshop();
         onlineshop.setOnlineshop(onlineshopName);
