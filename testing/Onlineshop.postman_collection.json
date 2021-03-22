@@ -85,7 +85,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{URI}}resource/artikel/read?artikelNummer=333-224-53-23",
+					"raw": "{{URI}}resource/artikel/read?artikelNummer=3247c340-c712-402e-b400-0a23a9368c97",
 					"host": [
 						"{{URI}}resource"
 					],
@@ -96,7 +96,7 @@
 					"query": [
 						{
 							"key": "artikelNummer",
-							"value": "333-224-53-23"
+							"value": "3247c340-c712-402e-b400-0a23a9368c97"
 						}
 					]
 				}
@@ -122,7 +122,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{URI}}resource/artikel/read?artikelNummer=111-222-33-44",
+					"raw": "{{URI}}resource/artikel/read?artikelNummer=2347c340-c712-402e-b400-0a23a9368c97",
 					"host": [
 						"{{URI}}resource"
 					],
@@ -133,7 +133,7 @@
 					"query": [
 						{
 							"key": "artikelNummer",
-							"value": "111-222-33-44"
+							"value": "2347c340-c712-402e-b400-0a23a9368c97"
 						}
 					]
 				}
@@ -142,6 +142,19 @@
 		},
 		{
 			"name": "Read Artikel with invalid uuid",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(400);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -163,6 +176,449 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Insert Artikel",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "onlineshopUUID",
+							"value": "d3e783a4-1ee3-4a17-9c35-f03d12c9b1c0",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Jordan 1",
+							"type": "text"
+						},
+						{
+							"key": "preis",
+							"value": "209.90",
+							"type": "text"
+						},
+						{
+							"key": "stueckzahl",
+							"value": "4",
+							"type": "text"
+						},
+						{
+							"key": "artikelNummer",
+							"value": "d4566ba6-51b7-485d-8ee2-1ef93258f36e",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URI}}resource/artikel/create",
+					"host": [
+						"{{URI}}resource"
+					],
+					"path": [
+						"artikel",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Artikel",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "onlineshopUUID",
+							"value": "d3e783a4-1ee3-4a17-9c35-f03d12c9b1c0",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Nike Dunk Coast",
+							"type": "text"
+						},
+						{
+							"key": "preis",
+							"value": "149.90",
+							"type": "text"
+						},
+						{
+							"key": "stueckzahl",
+							"value": "8",
+							"type": "text"
+						},
+						{
+							"key": "artikelNummer",
+							"value": "ecd86148-5341-43c6-81ed-f3f4595965dc",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URI}}resource/artikel/update",
+					"host": [
+						"{{URI}}resource"
+					],
+					"path": [
+						"artikel",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Unknown Artikel",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{URI}}resource/artikel/update",
+					"host": [
+						"{{URI}}resource"
+					],
+					"path": [
+						"artikel",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read Onlineshop",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(200);",
+							"})",
+							"",
+							"pm.test(\"validate response\", function(){",
+							"    pm.response.to.be.json;",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson.title).to.eql(\"Titolo.ch\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URI}}resource/onlineshop/read?uuid=d3e783a4-1ee3-4a17-9c35-f03d12c9b1c0",
+					"host": [
+						"{{URI}}resource"
+					],
+					"path": [
+						"onlineshop",
+						"read"
+					],
+					"query": [
+						{
+							"key": "uuid",
+							"value": "d3e783a4-1ee3-4a17-9c35-f03d12c9b1c0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insert Onlineshop",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "onlineshopUUID",
+							"value": "1fa70c21-9ead-4fb9-b686-761fce735a19",
+							"type": "text"
+						},
+						{
+							"key": "onlineshop",
+							"value": "Snipes.ch",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URI}}resource/onlineshop/create",
+					"host": [
+						"{{URI}}resource"
+					],
+					"path": [
+						"onlineshop",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Onlineshop",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "onlineshopUUID",
+							"value": "d3e783a4-1ee3-4a17-9c35-f03d12c9b1c0",
+							"type": "text"
+						},
+						{
+							"key": "onlineshop",
+							"value": "Zalando.ch",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URI}}resource/onlineshop/update",
+					"host": [
+						"{{URI}}resource"
+					],
+					"path": [
+						"onlineshop",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Artikel",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URI}}resource/artikel/delete?uuid=3247c340-c712-402e-b400-0a23a9368c97",
+					"host": [
+						"{{URI}}resource"
+					],
+					"path": [
+						"artikel",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "uuid",
+							"value": "3247c340-c712-402e-b400-0a23a9368c97"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Unknown Artikel",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(404);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URI}}resource/artikel/delete?uuid=06017cd3-5025-4b45-bb3a-d658e25974c2",
+					"host": [
+						"{{URI}}resource"
+					],
+					"path": [
+						"artikel",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "uuid",
+							"value": "06017cd3-5025-4b45-bb3a-d658e25974c2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Onlineshop",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URI}}resource/onlineshop/delete?uuid=d3e783a4-1ee3-4a17-9c35-f03d12c9b1c0",
+					"host": [
+						"{{URI}}resource"
+					],
+					"path": [
+						"onlineshop",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "uuid",
+							"value": "d3e783a4-1ee3-4a17-9c35-f03d12c9b1c0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Unknown Onlineshop",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(404);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URI}}resource/onlineshop/delete?uuid=c8c82d19-e656-42d0-968e-80287b403c94",
+					"host": [
+						"{{URI}}resource"
+					],
+					"path": [
+						"onlineshop",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "uuid",
+							"value": "c8c82d19-e656-42d0-968e-80287b403c94"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	],
 	"variable": [

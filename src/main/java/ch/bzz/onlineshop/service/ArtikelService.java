@@ -2,9 +2,10 @@ package ch.bzz.onlineshop.service;
 
 import ch.bzz.onlineshop.data.DataHandler;
 import ch.bzz.onlineshop.model.Artikel;
-import com.sun.org.apache.regexp.internal.RE;
 
-import javax.annotation.PostConstruct;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -87,11 +88,27 @@ public class ArtikelService {
     @Path("create")
     @Produces(MediaType.TEXT_PLAIN)
     public Response createArtikel(
-            @FormParam("onlineshopUUID") String onlineshopUUID,
-            @FormParam("name") String name,
-            @FormParam("preis") Double preis,
-            @FormParam("stueckzahl") int stueckzahl,
-            @FormParam("artikelNummer") String artikelNummer
+            @FormParam("onlineshopUUID")
+            @NotEmpty
+            String onlineshopUUID,
+
+            @FormParam("name")
+            @NotEmpty
+            @Size(min = 2, max = 40)
+            String name,
+
+            @FormParam("preis")
+            @NotEmpty
+            @DecimalMin("0.05")
+            Double preis,
+
+            @FormParam("stueckzahl")
+            @NotEmpty
+            int stueckzahl,
+
+            @FormParam("artikelNummer")
+            @NotEmpty
+            String artikelNummer
     ) {
        int httpStatus = 200;
        Artikel artikel = new Artikel();
@@ -126,11 +143,27 @@ public class ArtikelService {
     @Path("update")
     @Produces(MediaType.TEXT_PLAIN)
     public Response updateArtikel(
-            @FormParam("onlineshopUUID") String onlineshopUUID,
-            @FormParam("name") String name,
-            @FormParam("preis") Double preis,
-            @FormParam("stueckzahl") int stueckzahl,
-            @FormParam("artikelNummer") String artikelNummer
+            @FormParam("onlineshopUUID")
+            @NotEmpty
+                    String onlineshopUUID,
+
+            @FormParam("name")
+            @NotEmpty
+            @Size(min = 2, max = 40)
+                    String name,
+
+            @FormParam("preis")
+            @NotEmpty
+            @DecimalMin("0.05")
+                    Double preis,
+
+            @FormParam("stueckzahl")
+            @NotEmpty
+                    int stueckzahl,
+
+            @FormParam("artikelNummer")
+            @NotEmpty
+                    String artikelNummer
     ) {
         int httpStatus = 200;
         try {
@@ -168,7 +201,9 @@ public class ArtikelService {
     @Path("delete")
     @Produces(MediaType.TEXT_PLAIN)
     public Response deleteArtikel(
-            @QueryParam("uuid") String artikelNummer
+            @QueryParam("uuid")
+            @NotEmpty
+            String artikelNummer
     ) {
         int httpStatus;
         try {

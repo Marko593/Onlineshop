@@ -1,9 +1,10 @@
 package ch.bzz.onlineshop.service;
 
 import ch.bzz.onlineshop.data.DataHandler;
-import ch.bzz.onlineshop.model.Artikel;
 import ch.bzz.onlineshop.model.Onlineshop;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -82,15 +83,21 @@ public class OnlineshopService {
     @Path("create")
     @Produces(MediaType.TEXT_PLAIN)
     public Response createOnlineshop(
-            @FormParam("onlineshopURL") String onlineshopUrl,
-            @FormParam("onlineshop") String onlineshopName
+            @FormParam("onlineshopUUID")
+            @NotEmpty
+            String onlineshopUUID,
+
+            @FormParam("onlineshop")
+            @NotEmpty
+            @Size(min = 2, max = 40)
+            String onlineshopName
     ) {
         List<Onlineshop> onlineshopList = DataHandler.getOnlineshopList();
-        String onlineshopUUID = UUID.randomUUID().toString();
 
         int httpStatus = 200;
         Onlineshop onlineshop = new Onlineshop();
         onlineshop.setOnlineshop(onlineshopName);
+        onlineshop.setOnlineshopUUID(onlineshopUUID);
         DataHandler.insertOnlineshop(onlineshop);
 
         Response response = Response
@@ -110,8 +117,14 @@ public class OnlineshopService {
     @Path("update")
     @Produces(MediaType.TEXT_PLAIN)
     public Response updateOnlineshop(
-            @FormParam("onlineshopUUID") String onlineshopUUID,
-            @FormParam("onlineshop") String onlineshopName
+            @FormParam("onlineshopUUID")
+            @NotEmpty
+                    String onlineshopUUID,
+
+            @FormParam("onlineshop")
+            @NotEmpty
+            @Size(min = 2, max = 40)
+                    String onlineshopName
     ) {
         int httpStatus = 200;
         Onlineshop onlineshop = new Onlineshop();
@@ -139,7 +152,9 @@ public class OnlineshopService {
     @Path("delete")
     @Produces(MediaType.TEXT_PLAIN)
     public Response deleteOnlineshop (
-            @QueryParam("uuid") String onlineshopUUID
+            @QueryParam("uuid")
+            @NotEmpty
+            String onlineshopUUID
     ) {
         int httpStatus;
         try {
