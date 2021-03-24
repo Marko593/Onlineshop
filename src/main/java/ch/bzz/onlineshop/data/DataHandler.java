@@ -2,6 +2,7 @@ package ch.bzz.onlineshop.data;
 
 import ch.bzz.onlineshop.model.Artikel;
 import ch.bzz.onlineshop.model.Onlineshop;
+import ch.bzz.onlineshop.model.User;
 import ch.bzz.onlineshop.service.Config;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,6 +25,7 @@ import java.util.List;
 public class DataHandler {
     private static final DataHandler instance = new DataHandler();
     private static List<Onlineshop> onlineshopList = null;
+    private static List<User> userList = null;
 
     /**
      * default constructor: defeat instantiation
@@ -43,6 +45,14 @@ public class DataHandler {
             readJSON();
         }
         return onlineshopList;
+    }
+
+    public static List<User> getUserList() {
+        if (userList == null) {
+            userList = new ArrayList<>();
+            readJSON();
+        }
+        return userList;
     }
 
     public static List<Artikel> getArtikelList() {
@@ -98,6 +108,21 @@ public class DataHandler {
     }
 
     /**
+     * deletes the user if it's available
+     * @param user
+     * @return
+     */
+    public static boolean updateUser(User user) {
+        boolean found = false;
+        User entry = findUserByUUID(user.getUserUUID());
+        if (entry != null) {
+            found = true;
+            entry.setPassword(user.getPassword());
+        }
+        return found;
+    }
+
+    /**
      * deletes onlineshop, if it has no articles
      * @param onlineshopUUID
      * @return
@@ -114,6 +139,20 @@ public class DataHandler {
         return errorcode;
     }
 
+    public static int deleteUser(String userUUID) {
+        int errorcode;
+        User user = findUserByUUID(userUUID);
+        if (user == null) errorcode = 1;
+        else if (user.getPassword() != null) {
+            getUserList().remove(user);
+            writeJSON();
+            errorcode = 0;
+        } else {
+            errorcode = -1;
+        }
+        return errorcode;
+    }
+
     /**
      * find the onlineshop by url
      *
@@ -126,6 +165,14 @@ public class DataHandler {
                 if (artikel.getArtikelNummer().equals(uuid))
                     return onlineshop;
             }
+        }
+        return null;
+    }
+
+    public static User findUserByUUID(String uuid) {
+        for (User user : getUserList()) {
+            if (user.getUserUUID().equals(uuid))
+                return user;
         }
         return null;
     }
@@ -245,5 +292,10 @@ public class DataHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void insertUser(User user) {
+        getUserList().add(user);
+        writeJSON();
     }
 }

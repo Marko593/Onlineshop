@@ -36,7 +36,7 @@
 							"",
 							"pm.test(\"validate response\", function(){",
 							"    pm.response.to.be.json;",
-							"    pm.expect(pm.response.text()).to.include(\"title\");",
+							"    pm.expect(pm.response.text()).to.include(\"name\");",
 							"});"
 						],
 						"type": "text/javascript"
@@ -301,9 +301,52 @@
 		},
 		{
 			"name": "Update Unknown Artikel",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(404)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
-				"method": "POST",
+				"method": "PUT",
 				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "onlineshopUUID",
+							"value": "d3e783a4-1ee3-4a17-9c35-f03d12c9b1c0",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Ferrari",
+							"type": "text"
+						},
+						{
+							"key": "preis",
+							"value": "20.00",
+							"type": "text"
+						},
+						{
+							"key": "stueckzahl",
+							"value": "5",
+							"type": "text"
+						},
+						{
+							"key": "artikelNummer",
+							"value": "4d2b89fe-fb4c-4411-93a9-ad5e4041d9d4",
+							"type": "text"
+						}
+					]
+				},
 				"url": {
 					"raw": "{{URI}}resource/artikel/update",
 					"host": [
@@ -594,6 +637,198 @@
 						{
 							"key": "uuid",
 							"value": "c8c82d19-e656-42d0-968e-80287b403c94"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insert User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "password",
+							"value": "banane20",
+							"type": "text"
+						},
+						{
+							"key": "userName",
+							"value": "TheLord",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URI}}resource/user/create",
+					"host": [
+						"{{URI}}resource"
+					],
+					"path": [
+						"user",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "userUUID",
+							"value": "e3ec8e84-7fe1-494b-8c11-85a2b7f2fe9c",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Apfel55",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URI}}resource/user/update",
+					"host": [
+						"{{URI}}resource"
+					],
+					"path": [
+						"user",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Unknown User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(404)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "userUUID",
+							"value": "2a40c85a-d7b3-428f-bd85-8f56687238cf",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Schlangentanz",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{URI}}resource/user/update",
+					"host": [
+						"{{URI}}resource"
+					],
+					"path": [
+						"user",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status test\", function(){",
+							"    pm.response.to.have.status(200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "?uuid=2a40c85a-d7b3-428f-bd85-8f56687238cf",
+					"query": [
+						{
+							"key": "uuid",
+							"value": "2a40c85a-d7b3-428f-bd85-8f56687238cf"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Unknown User",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URI}}resource/user/delete?uuid=922d70c5-b2bf-42ab-b79b-06fa068e9969",
+					"host": [
+						"{{URI}}resource"
+					],
+					"path": [
+						"user",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "uuid",
+							"value": "922d70c5-b2bf-42ab-b79b-06fa068e9969"
 						}
 					]
 				}

@@ -3,7 +3,9 @@ package ch.bzz.onlineshop.service;
 import ch.bzz.onlineshop.data.DataHandler;
 import ch.bzz.onlineshop.model.Onlineshop;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -119,6 +121,7 @@ public class OnlineshopService {
     public Response updateOnlineshop(
             @FormParam("onlineshopUUID")
             @NotEmpty
+            @Pattern(regexp = "[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}")
                     String onlineshopUUID,
 
             @FormParam("onlineshop")
@@ -148,12 +151,18 @@ public class OnlineshopService {
         return response;
     }
 
+    /**
+     * deletes an existing onlineshop
+     * @param onlineshopUUID
+     * @return
+     */
     @DELETE
     @Path("delete")
     @Produces(MediaType.TEXT_PLAIN)
     public Response deleteOnlineshop (
             @QueryParam("uuid")
             @NotEmpty
+            @Pattern(regexp = "[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}")
             String onlineshopUUID
     ) {
         int httpStatus;

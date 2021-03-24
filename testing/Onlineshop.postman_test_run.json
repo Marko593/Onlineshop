@@ -1,26 +1,26 @@
 {
-	"id": "124c3886-3fd0-4bdd-a9cf-e521d76b15b1",
+	"id": "434a7d93-4db0-4e89-a745-55829226dece",
 	"name": "Onlineshop",
-	"timestamp": "2021-03-22T19:04:01.934Z",
+	"timestamp": "2021-03-24T18:48:48.505Z",
 	"collection_id": "0ca07777-e110-4e8b-8699-2b58a7651006",
 	"folder_id": 0,
 	"environment_id": "0",
-	"totalPass": 3,
-	"totalFail": 13,
+	"totalPass": 5,
+	"totalFail": 15,
 	"results": [
 		{
 			"id": "3acf9474-674a-45da-9089-f1cf7adfe159",
 			"name": "TestService",
-			"url": "http://localhost:8080/Onlineshop-0.1//resource/test/test",
-			"time": 324,
+			"url": "http://localhost:8080/Onlineshop-0.1/resource/test/test",
+			"time": 1723,
 			"responseCode": {
-				"code": 404,
-				"name": "Not Found"
+				"code": 200,
+				"name": "OK"
 			},
 			"tests": {},
 			"testPassFailCounts": {},
 			"times": [
-				324
+				1723
 			],
 			"allTests": [
 				{}
@@ -29,8 +29,8 @@
 		{
 			"id": "8ec29842-96c4-430f-bfb3-06b715b73f52",
 			"name": "Artikelliste",
-			"url": "http://localhost:8080/Onlineshop-0.1//resource/artikel/list",
-			"time": 23,
+			"url": "http://localhost:8080/Onlineshop-0.1/resource/artikel/list",
+			"time": 657,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -50,7 +50,7 @@
 				}
 			},
 			"times": [
-				23
+				657
 			],
 			"allTests": [
 				{
@@ -62,8 +62,8 @@
 		{
 			"id": "0b2ed36b-09dc-403a-b9ca-8045a9791dae",
 			"name": "Read Artikel",
-			"url": "http://localhost:8080/Onlineshop-0.1//resource/artikel/read?artikelNummer=3247c340-c712-402e-b400-0a23a9368c97",
-			"time": 17,
+			"url": "http://localhost:8080/Onlineshop-0.1/resource/artikel/read?artikelNummer=3247c340-c712-402e-b400-0a23a9368c97",
+			"time": 35,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -83,7 +83,7 @@
 				}
 			},
 			"times": [
-				17
+				35
 			],
 			"allTests": [
 				{
@@ -95,8 +95,8 @@
 		{
 			"id": "05b27cda-b4e4-45cf-aedd-c06635b83d48",
 			"name": "Read Unknown Artikel",
-			"url": "http://localhost:8080/Onlineshop-0.1//resource/artikel/read?artikelNummer=2347c340-c712-402e-b400-0a23a9368c97",
-			"time": 440,
+			"url": "http://localhost:8080/Onlineshop-0.1/resource/artikel/read?artikelNummer=2347c340-c712-402e-b400-0a23a9368c97",
+			"time": 1356,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -111,7 +111,7 @@
 				}
 			},
 			"times": [
-				440
+				1356
 			],
 			"allTests": [
 				{
@@ -122,8 +122,8 @@
 		{
 			"id": "c34e7fea-1aba-41e6-a77b-fe44cb19ba7c",
 			"name": "Read Artikel with invalid uuid",
-			"url": "http://localhost:8080/Onlineshop-0.1//?artikelNummer=333-224-53-23&",
-			"time": 36,
+			"url": "http://localhost:8080/Onlineshop-0.1/?artikelNummer=333-224-53-23&",
+			"time": 273,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -138,7 +138,7 @@
 				}
 			},
 			"times": [
-				36
+				273
 			],
 			"allTests": [
 				{
@@ -149,8 +149,8 @@
 		{
 			"id": "df98391e-6a00-4a73-bc59-fa00d0b5310a",
 			"name": "Insert Artikel",
-			"url": "http://localhost:8080/Onlineshop-0.1//resource/artikel/create",
-			"time": 24,
+			"url": "http://localhost:8080/Onlineshop-0.1/resource/artikel/create",
+			"time": 43,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -165,7 +165,7 @@
 				}
 			},
 			"times": [
-				24
+				43
 			],
 			"allTests": [
 				{
@@ -176,8 +176,8 @@
 		{
 			"id": "8b14da35-1297-4025-99ab-26eee85ad2bc",
 			"name": "Update Artikel",
-			"url": "http://localhost:8080/Onlineshop-0.1//resource/artikel/update",
-			"time": 7,
+			"url": "http://localhost:8080/Onlineshop-0.1/resource/artikel/update",
+			"time": 9,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -192,7 +192,7 @@
 				}
 			},
 			"times": [
-				7
+				9
 			],
 			"allTests": [
 				{
@@ -203,26 +203,35 @@
 		{
 			"id": "6229afbc-b6b5-4444-803c-e9ed438789c5",
 			"name": "Update Unknown Artikel",
-			"url": "http://localhost:8080/Onlineshop-0.1//resource/artikel/update",
-			"time": 13,
+			"url": "http://localhost:8080/Onlineshop-0.1/resource/artikel/update",
+			"time": 1411,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
 			},
-			"tests": {},
-			"testPassFailCounts": {},
+			"tests": {
+				"Status test": true
+			},
+			"testPassFailCounts": {
+				"Status test": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
 			"times": [
-				13
+				1411
 			],
 			"allTests": [
-				{}
+				{
+					"Status test": true
+				}
 			]
 		},
 		{
 			"id": "e325d712-11ae-48b8-9d0b-b508bb0e7b1c",
 			"name": "Read Onlineshop",
-			"url": "http://localhost:8080/Onlineshop-0.1//resource/onlineshop/read?uuid=d3e783a4-1ee3-4a17-9c35-f03d12c9b1c0",
-			"time": 5,
+			"url": "http://localhost:8080/Onlineshop-0.1/resource/onlineshop/read?uuid=d3e783a4-1ee3-4a17-9c35-f03d12c9b1c0",
+			"time": 65,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -242,7 +251,7 @@
 				}
 			},
 			"times": [
-				5
+				65
 			],
 			"allTests": [
 				{
@@ -254,8 +263,8 @@
 		{
 			"id": "1937c37f-9c98-4f72-8712-b910d4b8988d",
 			"name": "Insert Onlineshop",
-			"url": "http://localhost:8080/Onlineshop-0.1//resource/onlineshop/create",
-			"time": 100,
+			"url": "http://localhost:8080/Onlineshop-0.1/resource/onlineshop/create",
+			"time": 9,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -270,7 +279,7 @@
 				}
 			},
 			"times": [
-				100
+				9
 			],
 			"allTests": [
 				{
@@ -281,8 +290,8 @@
 		{
 			"id": "749d7ad5-85fd-4182-b691-f1176d0d75b6",
 			"name": "Update Onlineshop",
-			"url": "http://localhost:8080/Onlineshop-0.1//resource/onlineshop/update",
-			"time": 14,
+			"url": "http://localhost:8080/Onlineshop-0.1/resource/onlineshop/update",
+			"time": 13,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -297,7 +306,7 @@
 				}
 			},
 			"times": [
-				14
+				13
 			],
 			"allTests": [
 				{
@@ -308,8 +317,8 @@
 		{
 			"id": "f3569ed9-81a9-4cbb-9499-87fd1b85a5a7",
 			"name": "Delete Artikel",
-			"url": "http://localhost:8080/Onlineshop-0.1//resource/artikel/delete?uuid=3247c340-c712-402e-b400-0a23a9368c97",
-			"time": 7,
+			"url": "http://localhost:8080/Onlineshop-0.1/resource/artikel/delete?uuid=3247c340-c712-402e-b400-0a23a9368c97",
+			"time": 171,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -324,7 +333,7 @@
 				}
 			},
 			"times": [
-				7
+				171
 			],
 			"allTests": [
 				{
@@ -335,8 +344,8 @@
 		{
 			"id": "520fc57d-2412-44ec-a107-51f18b10b6c3",
 			"name": "Delete Unknown Artikel",
-			"url": "http://localhost:8080/Onlineshop-0.1//resource/artikel/delete?uuid=06017cd3-5025-4b45-bb3a-d658e25974c2",
-			"time": 8,
+			"url": "http://localhost:8080/Onlineshop-0.1/resource/artikel/delete?uuid=06017cd3-5025-4b45-bb3a-d658e25974c2",
+			"time": 30,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -351,7 +360,7 @@
 				}
 			},
 			"times": [
-				8
+				30
 			],
 			"allTests": [
 				{
@@ -362,8 +371,8 @@
 		{
 			"id": "b241f537-2deb-474a-a584-133f33c4f2b6",
 			"name": "Delete Onlineshop",
-			"url": "http://localhost:8080/Onlineshop-0.1//resource/onlineshop/delete?uuid=d3e783a4-1ee3-4a17-9c35-f03d12c9b1c0",
-			"time": 5,
+			"url": "http://localhost:8080/Onlineshop-0.1/resource/onlineshop/delete?uuid=d3e783a4-1ee3-4a17-9c35-f03d12c9b1c0",
+			"time": 1950,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -378,7 +387,7 @@
 				}
 			},
 			"times": [
-				5
+				1950
 			],
 			"allTests": [
 				{
@@ -389,8 +398,8 @@
 		{
 			"id": "3e0b887c-e164-4609-8640-c44971b756b1",
 			"name": "Delete Unknown Onlineshop",
-			"url": "http://localhost:8080/Onlineshop-0.1//resource/onlineshop/delete?uuid=c8c82d19-e656-42d0-968e-80287b403c94",
-			"time": 7,
+			"url": "http://localhost:8080/Onlineshop-0.1/resource/onlineshop/delete?uuid=c8c82d19-e656-42d0-968e-80287b403c94",
+			"time": 188,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -405,7 +414,88 @@
 				}
 			},
 			"times": [
-				7
+				188
+			],
+			"allTests": [
+				{
+					"Status test": true
+				}
+			]
+		},
+		{
+			"id": "c43e2e29-8196-4511-8888-aa219f8db830",
+			"name": "Insert User",
+			"url": "http://localhost:8080/Onlineshop-0.1/resource/user/create",
+			"time": 289,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status test": false
+			},
+			"testPassFailCounts": {
+				"Status test": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				289
+			],
+			"allTests": [
+				{
+					"Status test": false
+				}
+			]
+		},
+		{
+			"id": "f692e1b0-3dc1-4ad3-8c84-dcea2a3487de",
+			"name": "Update User",
+			"url": "http://localhost:8080/Onlineshop-0.1/resource/user/update",
+			"time": 109,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status test": false
+			},
+			"testPassFailCounts": {
+				"Status test": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				109
+			],
+			"allTests": [
+				{
+					"Status test": false
+				}
+			]
+		},
+		{
+			"id": "8cd9820b-20cb-4891-8991-50e03ac2d0f5",
+			"name": "Update Unknown User",
+			"url": "http://localhost:8080/Onlineshop-0.1/resource/user/update",
+			"time": 31,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Status test": true
+			},
+			"testPassFailCounts": {
+				"Status test": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				31
 			],
 			"allTests": [
 				{
@@ -415,7 +505,7 @@
 		}
 	],
 	"count": 1,
-	"totalTime": 1030,
+	"totalTime": 8362,
 	"collection": {
 		"requests": [
 			{
@@ -448,7 +538,7 @@
 			},
 			{
 				"id": "6229afbc-b6b5-4444-803c-e9ed438789c5",
-				"method": "POST"
+				"method": "PUT"
 			},
 			{
 				"id": "e325d712-11ae-48b8-9d0b-b508bb0e7b1c",
@@ -476,6 +566,22 @@
 			},
 			{
 				"id": "3e0b887c-e164-4609-8640-c44971b756b1",
+				"method": "DELETE"
+			},
+			{
+				"id": "c43e2e29-8196-4511-8888-aa219f8db830",
+				"method": "POST"
+			},
+			{
+				"id": "f692e1b0-3dc1-4ad3-8c84-dcea2a3487de",
+				"method": "PUT"
+			},
+			{
+				"id": "8cd9820b-20cb-4891-8991-50e03ac2d0f5",
+				"method": "PUT"
+			},
+			{
+				"id": "15695eb9-b4b8-4eab-a170-7ca77de32a1e",
 				"method": "DELETE"
 			}
 		]

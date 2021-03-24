@@ -5,6 +5,7 @@ import ch.bzz.onlineshop.model.Artikel;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -52,6 +53,7 @@ public class ArtikelService {
     @Produces(MediaType.APPLICATION_JSON)
 
     public Response readArtikel(
+            @Pattern(regexp = "[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}")
             @QueryParam("artikelNummer") String artikelNummer
     ) {
         Artikel artikel = null;
@@ -90,6 +92,7 @@ public class ArtikelService {
     public Response createArtikel(
             @FormParam("onlineshopUUID")
             @NotEmpty
+            @Pattern(regexp = "[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}")
             String onlineshopUUID,
 
             @FormParam("name")
@@ -145,6 +148,7 @@ public class ArtikelService {
     public Response updateArtikel(
             @FormParam("onlineshopUUID")
             @NotEmpty
+            @Pattern(regexp = "[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}")
                     String onlineshopUUID,
 
             @FormParam("name")
@@ -163,6 +167,7 @@ public class ArtikelService {
 
             @FormParam("artikelNummer")
             @NotEmpty
+            @Pattern(regexp = "[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}")
                     String artikelNummer
     ) {
         int httpStatus = 200;
@@ -203,6 +208,7 @@ public class ArtikelService {
     public Response deleteArtikel(
             @QueryParam("uuid")
             @NotEmpty
+            @Pattern(regexp = "[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}")
             String artikelNummer
     ) {
         int httpStatus;
