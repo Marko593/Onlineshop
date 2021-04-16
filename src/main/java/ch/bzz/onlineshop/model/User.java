@@ -11,6 +11,9 @@ public class User {
     private String userUUID;
     private String password;
     private String userName;
+    private String role;
+
+    public User() { setRole("guest");}
 
     /**
      * gets the uuid from the user
@@ -59,4 +62,16 @@ public class User {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    /**
+     * Gets the role
+     * @return value of role
+     */
+    public String getRole() {return role;}
+
+    /**
+     * sets the role
+     * @param role
+     */
+    public void setRole(String role) {this.role = role;}
 }

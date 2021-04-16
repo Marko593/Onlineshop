@@ -1,13 +1,16 @@
 package ch.bzz.onlineshop.service;
 
 import ch.bzz.onlineshop.data.DataHandler;
+import ch.bzz.onlineshop.data.UserData;
 import ch.bzz.onlineshop.model.User;
+import org.w3c.dom.UserDataHandler;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 import java.util.UUID;
 
@@ -121,6 +124,56 @@ public class UserService {
         }
         Response response = Response
                 .status(httpStatus)
+                .entity("")
+                .build();
+        return response;
+    }
+
+    @POST
+    @Path("login")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response login(
+            @FormParam("username") String username,
+            @FormParam("password") String password
+    ) {
+        int httpStatus;
+
+        User user = UserData.findUser(username, password);
+        if (user.getRole().equals("guest")) {
+            httpStatus = 404;
+        } else {
+            httpStatus = 200;
+        }
+        NewCookie cookie = new NewCookie(
+                "userRole",
+                user.getRole(),
+                "/",
+                "",
+                "Login-Cookie",
+                600,
+                false
+        );
+
+        Response response = Response
+                .status(httpStatus)
+                .entity("")
+                .cookie(cookie)
+                .build();
+        return response;
+    }
+
+    /**
+     * logout current user
+     *
+     * @return Response object with guest-Cookie
+     */
+    @DELETE
+    @Path("logout")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response logout() {
+
+        Response response = Response
+                .status(200)
                 .entity("")
                 .build();
         return response;
