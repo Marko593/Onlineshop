@@ -3,6 +3,7 @@ package ch.bzz.onlineshop.service;
 import ch.bzz.onlineshop.data.DataHandler;
 import ch.bzz.onlineshop.model.Onlineshop;
 
+import javax.print.DocFlavor;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -33,8 +34,18 @@ public class OnlineshopService {
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
 
-    public Response listOnlineshop(){
-        List<Onlineshop> onlineshopList = DataHandler.getOnlineshopList();
+    public Response listOnlineshop(
+            @CookieParam("userRole") String userRole
+    ){
+        int httpStatus;
+        List<Onlineshop> onlineshopList = null;
+        if (userRole == null || userRole.equals("guest")) {
+            httpStatus = 403;
+        } else {
+            httpStatus = 200;
+            onlineshopList = DataHandler.getOnlineshopList();
+        }
+
         Response response = Response
                 .status(200)
                 .entity(onlineshopList)
@@ -53,22 +64,26 @@ public class OnlineshopService {
     @Produces(MediaType.APPLICATION_JSON)
 
     public Response readOnlineshop(
-            @QueryParam("uuid") String uuid
-    ) {
+            @QueryParam("uuid") String uuid,
+            @CookieParam("userRole") String userRole
+            ) {
         Onlineshop onlineshop = null;
         int httpStatus;
 
-        try {
-            onlineshop = DataHandler.findOnlineshopByUUID(uuid);
-            if (onlineshop != null) {
-                httpStatus = 200;
-            } else {
-                httpStatus = 404;
+        if (userRole == null || userRole.equals("guest")) {
+            httpStatus = 403;
+        } else {
+            try {
+                onlineshop = DataHandler.findOnlineshopByUUID(uuid);
+                if (onlineshop != null) {
+                    httpStatus = 200;
+                } else {
+                    httpStatus = 404;
+                }
+            } catch (IllegalArgumentException argEx) {
+                httpStatus = 400;
             }
-        } catch (IllegalArgumentException argEx) {
-            httpStatus = 400;
         }
-
         Response response = Response
                 .status(httpStatus)
                 .entity(onlineshop)
@@ -92,15 +107,21 @@ public class OnlineshopService {
             @FormParam("onlineshop")
             @NotEmpty
             @Size(min = 2, max = 40)
-            String onlineshopName
+            String onlineshopName,
+
+            @CookieParam("userRole") String userRole
     ) {
         List<Onlineshop> onlineshopList = DataHandler.getOnlineshopList();
-
-        int httpStatus = 200;
-        Onlineshop onlineshop = new Onlineshop();
-        onlineshop.setOnlineshop(onlineshopName);
-        onlineshop.setOnlineshopUUID(onlineshopUUID);
-        DataHandler.insertOnlineshop(onlineshop);
+        int httpStatus;
+        if (userRole.equals("admin")) {
+            httpStatus = 200;
+            Onlineshop onlineshop = new Onlineshop();
+            onlineshop.setOnlineshop(onlineshopName);
+            onlineshop.setOnlineshopUUID(onlineshopUUID);
+            DataHandler.insertOnlineshop(onlineshop);
+        } else {
+            httpStatus = 403;
+        }
 
         Response response = Response
                 .status(httpStatus)
@@ -127,22 +148,29 @@ public class OnlineshopService {
             @FormParam("onlineshop")
             @NotEmpty
             @Size(min = 2, max = 40)
-                    String onlineshopName
+                    String onlineshopName,
+
+            @CookieParam("userRole") String userRole
     ) {
-        int httpStatus = 200;
+        int httpStatus;
         Onlineshop onlineshop = new Onlineshop();
-        try {
-            UUID.fromString(onlineshopUUID);
-            onlineshop.setOnlineshopUUID(onlineshopUUID);
-            onlineshop.setOnlineshop(onlineshopName);
-            if (DataHandler.updateOnlineshop(onlineshop)) {
-                httpStatus = 200;
-            } else {
-                httpStatus = 404;
+        if (userRole.equals("admin")) {
+            try {
+                UUID.fromString(onlineshopUUID);
+                onlineshop.setOnlineshopUUID(onlineshopUUID);
+                onlineshop.setOnlineshop(onlineshopName);
+                if (DataHandler.updateOnlineshop(onlineshop)) {
+                    httpStatus = 200;
+                } else {
+                    httpStatus = 404;
+                }
+            } catch (IllegalArgumentException argEx) {
+                httpStatus = 400;
             }
-        } catch (IllegalArgumentException argEx) {
-            httpStatus = 400;
+        } else {
+            httpStatus = 403;
         }
+
 
         Response response = Response
                 .status(httpStatus)
@@ -163,18 +191,24 @@ public class OnlineshopService {
             @QueryParam("uuid")
             @NotEmpty
             @Pattern(regexp = "[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}")
-            String onlineshopUUID
+            String onlineshopUUID,
+            @CookieParam("userRole") String userRole
     ) {
         int httpStatus;
-        try {
-            UUID.fromString(onlineshopUUID);
-            int errorcode = DataHandler.deleteOnlineshop(onlineshopUUID);
-            if (errorcode == 0) httpStatus = 200;
-            else if (errorcode == -1) httpStatus = 409;
-            else httpStatus = 404;
-        } catch (IllegalArgumentException argEx) {
-            httpStatus = 400;
+        if (userRole.equals("admin")) {
+            try {
+                UUID.fromString(onlineshopUUID);
+                int errorcode = DataHandler.deleteOnlineshop(onlineshopUUID);
+                if (errorcode == 0) httpStatus = 200;
+                else if (errorcode == -1) httpStatus = 409;
+                else httpStatus = 404;
+            } catch (IllegalArgumentException argEx) {
+                httpStatus = 400;
+            }
+        } else {
+            httpStatus = 403;
         }
+
         Response response = Response
                 .status(httpStatus)
                 .entity("")

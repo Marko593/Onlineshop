@@ -33,10 +33,19 @@ public class ArtikelService {
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
 
-    public Response listArtikel(){
-        List<Artikel> artikelList = DataHandler.getArtikelList();
+    public Response listArtikel(
+            @CookieParam("userRole") String userRole
+    ) {
+        List<Artikel> artikelList = null;
+        int httpStatus;
+        if (userRole == null || userRole.equals("guest")) {
+            httpStatus = 403;
+        } else {
+            httpStatus = 200;
+            artikelList = DataHandler.getArtikelList();
+        }
         Response response = Response
-                .status(200)
+                .status(httpStatus)
                 .entity(artikelList)
                 .build();
         return response;
@@ -54,21 +63,27 @@ public class ArtikelService {
 
     public Response readArtikel(
             @Pattern(regexp = "[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}")
-            @QueryParam("artikelNummer") String artikelNummer
+            @QueryParam("artikelNummer") String artikelNummer,
+            @CookieParam("userRole") String userRole
     ) {
         Artikel artikel = null;
         int httpStatus;
 
-        try {
-            artikel = DataHandler.findArtikelByArtikelnummer(artikelNummer);
-            if (artikel != null) {
-                httpStatus = 200;
-            } else {
-                httpStatus = 404;
+        if (userRole == null || userRole.equals("guest")) {
+            httpStatus = 403;
+        } else {
+            try {
+                artikel = DataHandler.findArtikelByArtikelnummer(artikelNummer);
+                if (artikel != null) {
+                    httpStatus = 200;
+                } else {
+                    httpStatus = 404;
+                }
+            } catch (IllegalArgumentException argEx) {
+                httpStatus = 400;
             }
-        } catch (IllegalArgumentException argEx) {
-            httpStatus = 400;
         }
+
 
         Response response = Response
                 .status(httpStatus)
@@ -79,6 +94,7 @@ public class ArtikelService {
 
     /**
      * creates a new article
+     *
      * @param onlineshopUUID
      * @param name
      * @param preis
@@ -93,39 +109,45 @@ public class ArtikelService {
             @FormParam("onlineshopUUID")
             @NotEmpty
             @Pattern(regexp = "[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}")
-            String onlineshopUUID,
+                    String onlineshopUUID,
 
             @FormParam("name")
             @NotEmpty
             @Size(min = 2, max = 40)
-            String name,
+                    String name,
 
             @FormParam("preis")
             @NotEmpty
             @DecimalMin("0.05")
-            Double preis,
+                    Double preis,
 
             @FormParam("stueckzahl")
             @NotEmpty
-            int stueckzahl,
+                    int stueckzahl,
 
             @FormParam("artikelNummer")
             @NotEmpty
-            String artikelNummer
+                    String artikelNummer,
+
+            @CookieParam("userRole") String userRole
     ) {
-       int httpStatus = 200;
-       Artikel artikel = new Artikel();
-       artikel.setArtikelNummer(UUID.randomUUID().toString());
-       setValues(
-               artikel,
-               name,
-               preis,
-               stueckzahl,
-               artikelNummer
-       );
+        int httpStatus;
+        if (userRole.equals("admin")) {
+            httpStatus = 200;
+            Artikel artikel = new Artikel();
+            artikel.setArtikelNummer(UUID.randomUUID().toString());
+            setValues(
+                    artikel,
+                    name,
+                    preis,
+                    stueckzahl,
+                    artikelNummer
+            );
 
-       DataHandler.insertArtikel(artikel, onlineshopUUID);
-
+            DataHandler.insertArtikel(artikel, onlineshopUUID);
+        } else {
+            httpStatus = 403;
+        }
         Response response = Response
                 .status(httpStatus)
                 .entity("")
@@ -135,6 +157,7 @@ public class ArtikelService {
 
     /**
      * updates an existing article
+     *
      * @param onlineshopUUID
      * @param name
      * @param preis
@@ -168,27 +191,36 @@ public class ArtikelService {
             @FormParam("artikelNummer")
             @NotEmpty
             @Pattern(regexp = "[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}")
-                    String artikelNummer
+                    String artikelNummer,
+
+            @CookieParam("userRole") String userRole
     ) {
-        int httpStatus = 200;
-        try {
-            UUID.fromString(artikelNummer);
-            Artikel artikel = DataHandler.findArtikelByArtikelnummer(artikelNummer);
-            setValues(
-                    artikel,
-                    name,
-                    preis,
-                    stueckzahl,
-                    artikelNummer
-            );
-            if (DataHandler.updateArtikel(artikel, onlineshopUUID)) {
-                httpStatus = 200;
-            } else {
-                httpStatus = 404;
+        int httpStatus;
+
+        if (userRole.equals("admin")) {
+            httpStatus = 200;
+            try {
+                UUID.fromString(artikelNummer);
+                Artikel artikel = DataHandler.findArtikelByArtikelnummer(artikelNummer);
+                setValues(
+                        artikel,
+                        name,
+                        preis,
+                        stueckzahl,
+                        artikelNummer
+                );
+                if (DataHandler.updateArtikel(artikel, onlineshopUUID)) {
+                    httpStatus = 200;
+                } else {
+                    httpStatus = 404;
+                }
+            } catch (IllegalArgumentException argEx) {
+                httpStatus = 400;
             }
-        } catch (IllegalArgumentException argEx) {
-            httpStatus = 400;
+        } else {
+            httpStatus = 403;
         }
+
 
         Response response = Response
                 .status(httpStatus)
@@ -199,6 +231,7 @@ public class ArtikelService {
 
     /**
      * deletes an existing article by artikelNummer
+     *
      * @param artikelNummer
      * @return
      */
@@ -209,20 +242,26 @@ public class ArtikelService {
             @QueryParam("uuid")
             @NotEmpty
             @Pattern(regexp = "[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}")
-            String artikelNummer
+                    String artikelNummer,
+            @CookieParam("userRole") String userRole
     ) {
         int httpStatus;
-        try {
-            UUID.fromString(artikelNummer);
+        if (userRole.equals("admin")){
+            try {
+                UUID.fromString(artikelNummer);
 
-            if (DataHandler.deleteArtikel(artikelNummer)) {
-                httpStatus = 200;
-            } else {
-                httpStatus = 404;
+                if (DataHandler.deleteArtikel(artikelNummer)) {
+                    httpStatus = 200;
+                } else {
+                    httpStatus = 404;
+                }
+            } catch (IllegalArgumentException argEx) {
+                httpStatus = 400;
             }
-        } catch (IllegalArgumentException argEx) {
-            httpStatus = 400;
+        } else {
+            httpStatus = 403;
         }
+
 
         Response response = Response
                 .status(httpStatus)
@@ -233,6 +272,7 @@ public class ArtikelService {
 
     /**
      * sets the attribute values of the artikel object
+     *
      * @param artikel
      * @param name
      * @param preis
