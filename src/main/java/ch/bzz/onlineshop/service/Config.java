@@ -34,6 +34,7 @@ public class Config extends Application {
         providers.add(TestService.class);
         providers.add(ArtikelService.class);
         providers.add(OnlineshopService.class);
+        providers.add(UserService.class);
         return providers;
     }
 
